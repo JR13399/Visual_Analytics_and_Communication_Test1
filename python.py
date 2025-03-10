@@ -7,7 +7,7 @@ data = pd.read_csv("university_student_dashboard_data.csv")
 
 # Set the title and description of the app
 st.set_page_config(page_title="University Dashboard", layout="wide")
-st.title("📊 University Dashboard - Admissions, Retention & Satisfaction")
+st.title("University Dashboard - Admissions, Retention & Satisfaction")
 st.markdown("""
 Welcome to the interactive dashboard of the university's admission, retention, and satisfaction trends over the years.  
 This dashboard allows you to analyze:
@@ -20,7 +20,7 @@ This dashboard allows you to analyze:
 """)
 
 # 1. Total Applications, Admissions, and Enrollments per Term (Bar Chart)
-st.header("📈 Total Applications, Admissions, and Enrollments per Term")
+st.header("Total Applications, Admissions, and Enrollments per Term")
 term_data = data.groupby(['Year', 'Term'])[['Applications', 'Admitted', 'Enrolled']].sum().reset_index()
 
 # Bar chart
@@ -30,14 +30,14 @@ fig = px.bar(term_data, x="Year", y=["Applications", "Admitted", "Enrolled"], co
 st.plotly_chart(fig)
 
 # 2. Retention Rate Trends Over Time (Line Plot)
-st.header("📊 Retention Rate Trends Over Time")
+st.header("Retention Rate Trends Over Time")
 fig = px.line(data, x="Year", y="Retention Rate (%)", color="Term", 
               labels={"Retention Rate (%)": "Retention Rate (%)"}, 
               title="Retention Rate Trends Over Time")
 st.plotly_chart(fig)
 
 # 3. Student Satisfaction Over the Years (Scatter Plot)
-st.header("😊 Student Satisfaction Over the Years")
+st.header("Student Satisfaction Over the Years")
 fig = px.scatter(data, x="Year", y="Student Satisfaction (%)", color="Term", 
                  size="Student Satisfaction (%)", hover_data=["Year", "Term"],
                  labels={"Student Satisfaction (%)": "Satisfaction (%)"},
@@ -45,7 +45,7 @@ fig = px.scatter(data, x="Year", y="Student Satisfaction (%)", color="Term",
 st.plotly_chart(fig)
 
 # 4. Enrollment Breakdown by Department (Stacked Bar Chart)
-st.header("🏫 Enrollment Breakdown by Department")
+st.header("Enrollment Breakdown by Department")
 department_data = data.groupby(['Year', 'Term'])[['Engineering Enrolled', 'Business Enrolled', 
                                                   'Arts Enrolled', 'Science Enrolled']].sum().reset_index()
 
@@ -57,7 +57,7 @@ fig = px.bar(department_data, x="Year", y=["Engineering Enrolled", "Business Enr
 st.plotly_chart(fig)
 
 # 5. Comparison Between Spring vs. Fall Term Trends (Line Plot)
-st.header("🌱 Spring vs. 🍂 Fall Term Comparison")
+st.header("Spring vs. Fall Term Comparison")
 comparison_data = data.groupby(['Year', 'Term'])[['Retention Rate (%)', 'Student Satisfaction (%)']].mean().reset_index()
 
 fig = px.line(comparison_data, x="Year", y=["Retention Rate (%)", "Student Satisfaction (%)"], color="Term", 
@@ -66,7 +66,7 @@ fig = px.line(comparison_data, x="Year", y=["Retention Rate (%)", "Student Satis
 st.plotly_chart(fig)
 
 # 6. Department-Wise Comparison for Retention & Satisfaction (Bubble Chart)
-st.header("🏫 Department-Wise Comparison for Retention & Satisfaction")
+st.header("Department-Wise Comparison for Retention & Satisfaction")
 
 # Create bubble chart comparing retention vs satisfaction by department
 department_retention = data.groupby(['Year', 'Term'])[['Retention Rate (%)']].mean().reset_index()
@@ -81,13 +81,13 @@ fig = px.scatter(department_comparison, x="Retention Rate (%)", y="Student Satis
 st.plotly_chart(fig)
 
 # 7. Retention Rate Distribution (Box Plot)
-st.header("📊 Retention Rate Distribution")
+st.header("Retention Rate Distribution")
 fig = px.box(data, x="Term", y="Retention Rate (%)", color="Term",
              title="Retention Rate Distribution by Term")
 st.plotly_chart(fig)
 
 # 8. Department Enrollment Proportions (Pie Chart)
-st.header("🍰 Department Enrollment Proportions")
+st.header("Department Enrollment Proportions")
 total_enrollment_by_department = data[['Engineering Enrolled', 'Business Enrolled', 'Arts Enrolled', 'Science Enrolled']].sum()
 
 fig = px.pie(names=total_enrollment_by_department.index, values=total_enrollment_by_department,
